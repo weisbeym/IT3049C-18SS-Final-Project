@@ -1,0 +1,19 @@
+{
+  "name": "it3049c-18ss-final-project",
+  "version": "1.0.0",
+  "description": "Final Project for Web Game Development Class",
+  "main": "game.js",
+  "dependencies": {
+    "phaser-ce": "^2.11.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.uc.edu/weisbeym/IT3049C-18SS-Final-Project.git"
+  },
+  "author": "Yisroel Weisberg",
+  "license": "ISC"
+}
