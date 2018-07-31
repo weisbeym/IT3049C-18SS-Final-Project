@@ -1,6 +1,6 @@
 // setup
 const directions = Object.freeze({up: 0, down: 1, right: 2, left: 3});
-let head, tail, cursors, snake, food, scoreText, livesText, playerDirection;
+let head, tail, cursors, food, scoreText, livesText, playerDirection;
 const canvasWidth = window.innerWidth, canvasHeight = window.innerHeight; 
 let playerSize = 64;
 let x = 128, y = 0;
