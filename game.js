@@ -28,7 +28,7 @@ const GameState = {
         });
         gameText.anchor.setTo(1, 0);
         initSnake();
-        placeRandomApple();
+        placeRandomFood();
 
         cursors = game.input.keyboard.createCursorKeys();
     },
@@ -52,7 +52,7 @@ const GameState = {
             }
             if (foodCollidesWithSnake()) {
                 score++;
-                apple.destroy();
+                food.destroy();
                 placeRandomFood();
                 gameSpeed--;
                 if (gameSpeed <= 5) gameSpeed = 5;
@@ -94,7 +94,7 @@ function placeRandomFood() {
 
 function newHead(x, y) {
     const newHead = new Object();
-    newHead.image = game.add.image(x, y, 'elephant');
+    newHead.image = game.add.image(x, y, 'snake');
     newHead.next = null;
     head.next = newHead;
     head = newHead;
