@@ -1,11 +1,11 @@
 // setup
 const directions = Object.freeze({up: 0, down: 1, right: 2, left: 3});
-let head, tail, cursors, snake, food, gameText, playerDirection;
-const canvasWidth = 832, canvasHeight = 640; 
+let head, tail, cursors, snake, food, scoreText, playerDirection;
+const canvasWidth = window.innerWidth, canvasHeight = window.innerHeight; 
 let playerSize = 64;
 let x = 128, y = 0;
 let frameCounter = 0;
-let gameSpeed = 20;
+let gameSpeed = 30;
 let score = 0;
 
 // inialize Phaser
@@ -22,19 +22,19 @@ const GameState = {
     
     create : function() {
        //this.background = this.game.add.sprite(0, 0, 'background'); <-- might go back to background image
-        gameText = game.add.text(canvasWidth, 0, "0", {
+        scoreText = game.add.text(canvasWidth, 0, "0", {
             font: "28px Arial",
             fill: "#fff"
         });
-        gameText.anchor.setTo(1, 0);
-        initSnake();
+        scoreText.anchor.setTo(2, 0);
+        createSnake();
         placeRandomFood();
 
         cursors = game.input.keyboard.createCursorKeys();
     },
     
     update : function() {
-        gameText.text = score;
+        scoreText.text = score;
         updateDirection();
         frameCounter++;
         if (frameCounter == gameSpeed) {
@@ -42,13 +42,24 @@ const GameState = {
             if (playerCollidesWithSelf()) {
                 alert("The game is over! Your score was: " + score);
                 deleteSnake();
-                initSnake();
+                createSnake();
                 score = 0;
                 gameSpeed = 20;
                 playerDirection = undefined;
                 x = 128;
                 y = 0;
-                gameText.text = "";
+                scoreText.text = "";
+            }
+            if(playerCollidesWithWall()){
+                alert("The game is over! Your score was: " + score);
+                deleteSnake();
+                createSnake();
+                score = 0;
+                gameSpeed = 20;
+                playerDirection = undefined;
+                x = 128;
+                y = 0;
+                scoreText.text = "";
             }
             if (foodCollidesWithSnake()) {
                 score++;
@@ -64,13 +75,12 @@ const GameState = {
     }
 };
 
-function initSnake() {
+function createSnake() {
     head = new Object();
     newHead(0, 0);
     tail = head;
     newHead(64, 0);
-    newHead(128, 0);
-
+    // newHead(128, 0);
 }
 
 function deleteSnake() {
@@ -90,8 +100,7 @@ function placeRandomFood() {
     } while (foodCollidesWithSnake());
 }
 
-// linked list functions
-
+// create new snake tile
 function newHead(x, y) {
     const newHead = new Object();
     newHead.image = game.add.image(x, y, 'snake');
@@ -123,13 +132,29 @@ function foodCollidesWithSnake() {
     return collides;
 }
 
+// check if the snake has collided with any other body part
 function playerCollidesWithSelf() {
-    // check if the head has collided with any other body part, starting at the tail
     var needle = tail;
     var collides = false;
     while (needle.next != head) {
         if (needle.image.position.x == head.image.position.x &&
             needle.image.position.y == head.image.position.y) {
+            collides = true;
+        }
+        needle = needle.next;
+    }
+    return collides;
+}
+
+// checks if the snake collides with the walls of the canvas
+function playerCollidesWithWall() {
+    let needle = tail;
+    let collides = false;
+    let numTimes = 0;
+    while (needle != null) {
+        numTimes++;
+        if (canvasWidth + needle.image.position.x  > canvasWidth ||
+            canvasHeight + needle.image.position.y > canvasHeight) {
             collides = true;
         }
         needle = needle.next;
