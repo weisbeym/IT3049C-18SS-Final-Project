@@ -4,11 +4,11 @@
   "description": "Final Project for Web Game Development Class",
   "main": "game.js",
   "dependencies": {
-    "phaser-ce": "^2.11.0",
-    "webpack": "^4.16.3"
+    "phaser-ce": "^2.16.0",
+    "webpack": "^4.44.0"
   },
   "devDependencies": {
-    "webpack-cli": "^3.1.0"
+    "webpack-cli": "^3.3.12"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
